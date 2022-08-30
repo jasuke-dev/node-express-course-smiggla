@@ -21,10 +21,18 @@ const createTasks = async (req,res)=>{
 
 }
 
-const getTask = (req,res)=>{
-  res.json({
-    id:req.params
-  })
+const getTask = async (req,res)=>{
+  try {
+    //deconstruktor dengan alias
+    const {id:taskID} = req.params
+    const task = await Task.findOne({_id:taskID})
+    if(!task){
+      return res.status(404).json({msg:`No task with id : ${taskID}`})
+    }
+    res.status(200).json({task})
+  } catch (error) {
+    res.status(500).json({error})
+  }
 }
 const updateTask = (req,res)=>{
   res.send('update tasks')
