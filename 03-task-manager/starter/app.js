@@ -1,8 +1,8 @@
 const express = require('express')
 const app = express()
-const connectDB = require('./db/connect')
-
 const taskRoutes = require('./routes/tasks')
+const connectDB = require('./db/connect')
+require('dotenv').config()
 
 const port = 5000;
 
@@ -19,7 +19,8 @@ app.use('/api/v1/tasks', taskRoutes)
 const start = async()=>{
   try{
     console.log('connecting...')
-    await connectDB()
+    //dibuat sync untuk memastikan koneksi ke db dulu
+    await connectDB(process.env.MONGO_URI)
     console.log('DB connected')
     app.listen(port,console.log(`Server listening port ${port}...`))
   } catch(err){
