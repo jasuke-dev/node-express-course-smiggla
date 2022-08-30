@@ -1,0 +1,1 @@
+'mongodb+srv://ega:<password>@nodeexpressprojects.7hoerwa.mongodb.net/?retryWrites=true&w=majority'
