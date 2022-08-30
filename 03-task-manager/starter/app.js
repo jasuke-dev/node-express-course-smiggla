@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const connectDB = require('./db/connect')
 
 const taskRoutes = require('./routes/tasks')
 
@@ -15,7 +16,16 @@ app.get('/',(req,res)=>{
 
 app.use('/api/v1/tasks', taskRoutes)
 
+const start = async()=>{
+  try{
+    console.log('connecting...')
+    await connectDB()
+    console.log('DB connected')
+    app.listen(port,console.log(`Server listening port ${port}...`))
+  } catch(err){
+    console.log(err)
+  }
+}
 
+start()
 
-
-app.listen(port,console.log(`Server listening port ${port}...`))
