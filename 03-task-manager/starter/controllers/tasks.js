@@ -64,9 +64,8 @@ const updateTask = async (req,res)=>{
   }
   res.status(200).json({task})
 
-  res.status(200).json({id:taskID, data: req.body})
   } catch (error) {
-    
+    res.status(500).json({msg: error})
   }
   
 }

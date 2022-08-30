@@ -9,10 +9,8 @@ const port = 5000;
 
 //middleware JSON
 app.use(express.json())
-
-app.get('/',(req,res)=>{
-  res.send('task mnager project')
-})
+//static files (folder public)
+app.use(express.static('./public'))
 
 app.use('/api/v1/tasks', taskRoutes)
 
