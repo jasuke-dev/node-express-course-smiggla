@@ -5,6 +5,7 @@ const connectDB = require('./db/connect')
 require('dotenv').config()
 
 const notFound = require('./middleware/not-found')
+const errorHandlerMiddleware = require('./middleware/error-handler')
 
 const port = 5000;
 
@@ -18,6 +19,9 @@ app.use('/api/v1/tasks', taskRoutes)
 
 //default jika route tidak ada
 app.use(notFound)
+
+//custom error handler
+app.use(errorHandlerMiddleware)
 
 const start = async()=>{
   try{
