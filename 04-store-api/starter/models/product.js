@@ -1,12 +1,12 @@
-const { Mongoose } = require("mongoose");
+const mongoose = require("mongoose");
 
-const ProductSchema = new Mongoose.Schema({
+const ProductSchema = new mongoose.Schema({
   name: {
     type:String,
     required:[true, 'Product name must be provided']
   },
   price : {
-    type:NUmber,
+    type:Number,
     required:[true,'Product price must be provided']
   },
   featured : {
@@ -17,7 +17,7 @@ const ProductSchema = new Mongoose.Schema({
     type:Number,
     default:4.5,
   },
-  created_at:{
+  createdAt:{
     type:Date,
     default:Date.now()
   },
@@ -31,4 +31,4 @@ const ProductSchema = new Mongoose.Schema({
   }
 })
 
-module.exports = mongoose.model('product',ProductSchema)
+module.exports = mongoose.model('Product',ProductSchema)
