@@ -11,6 +11,7 @@ const errorHandlerMiddleware = (err, req, res, next) => {
   //   return res.status(err.statusCode).json({ msg: err.message })
   // }
 
+  //contoh error ketika get single job dan idnya dirubah banyak
   if(err.name === 'CastError'){
     customError.msg = `No item found with id: ${err.value}`
     customError.statusCode = StatusCodes.BAD_REQUEST
