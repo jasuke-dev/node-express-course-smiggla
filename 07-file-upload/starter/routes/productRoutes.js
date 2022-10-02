@@ -5,6 +5,6 @@ const {createProduct, getAllProducts} = require('../controllers/productControlle
 const {uploudProductImage} = require('../controllers/uploadsController')
 
 router.route('/').post(createProduct).get(getAllProducts)
-router.route('/uplouds').post(uploudProductImage)
+router.route('/uploads').post(uploudProductImage)
 
 module.exports = router
