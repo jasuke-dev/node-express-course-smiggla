@@ -12,7 +12,7 @@ const morgan = require('morgan')
 const connectDB = require('./db/connect')
 //middleware
 const NotFoundMiddleware = require('./middleware/not-found')
-const ErrorHandlerMiddleware = require('./middleware/not-found')
+const ErrorHandlerMiddleware = require('./middleware/error-handler')
 
 //routes
 const authRouter = require('./routes/authRoutes')
