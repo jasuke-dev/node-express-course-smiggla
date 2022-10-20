@@ -7,7 +7,7 @@ const App = express()
 
 //rest packages
 const morgan = require('morgan')
-const cookie = require('cookie-parser')
+const cookieParser = require('cookie-parser')
 
 //db
 const connectDB = require('./db/connect')
@@ -17,11 +17,11 @@ const ErrorHandlerMiddleware = require('./middleware/error-handler')
 
 //routes
 const authRouter = require('./routes/authRoutes')
-const cookieParser = require('cookie-parser')
+
 //middleware
 App.use(morgan('tiny'))
 App.use(express.json())
-App.use(cookieParser())
+App.use(cookieParser(process.env.JWT_SECRET))
 
 
 //route
@@ -30,7 +30,10 @@ App.get('/',(req, res)=>{
   res.send('<h1>jaja</h1>') 
 })
 App.get('/api/v1',(req, res)=>{
-  console.log(req.cookies)
+  // console.log(req.cookies)
+  //signed cookies
+  console.log('perantara');
+  console.log(req.signedCookies)
   res.send('<h1>cookies</h1>') 
 })
 App.use('/api/v1/auth/', authRouter)
