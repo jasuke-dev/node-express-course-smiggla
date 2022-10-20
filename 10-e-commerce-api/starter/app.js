@@ -14,7 +14,8 @@ const connectDB = require('./db/connect')
 const NotFoundMiddleware = require('./middleware/not-found')
 const ErrorHandlerMiddleware = require('./middleware/not-found')
 
-
+//routes
+const authRouter = require('./routes/authRoutes')
 //middleware
 App.use(morgan('tiny'))
 App.use(express.json())
@@ -24,6 +25,7 @@ App.use(express.json())
 App.get('/',(req, res)=>{
   res.send('<h1>jaja</h1>') 
 })
+App.use('/api/v1/auth/', authRouter)
 App.use(NotFoundMiddleware)
 App.use(ErrorHandlerMiddleware)
 
