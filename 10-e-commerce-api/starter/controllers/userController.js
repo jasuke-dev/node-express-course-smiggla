@@ -1,8 +1,19 @@
+const User = require('../models/User')
+const customErrors = require('../errors')
+const { StatusCodes } = require('http-status-codes')
 const getAllUser = async (req, res) => {
-  res.send('get all user')
+  const users = await User.find({role:'user'}).select('-password')
+  res.status(StatusCodes.OK).json({users})
 }
 const getSingleUser = async (req, res) => {
-  res.send('get Singel user')
+  // destructuritation mengambil nilai id pada req.params lalu menyimpannya dengan variabel userId
+  const {params:{id : userId}} = req
+  console.log(userId);
+  const user = await User.findOne({_id : userId}).select('-password')
+  if(!user){
+    throw new customErrors.NotFoundError('No user with ID')
+  }
+  res.status(StatusCodes.OK).json({user})
 }
 const showCurrentUser = async (req, res) => {
   res.send('who am i')
