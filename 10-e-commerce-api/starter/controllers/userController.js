@@ -1,5 +1,5 @@
 const User = require('../models/User')
-const customErrors = require('../errors')
+const CustomErrors = require('../errors')
 const { StatusCodes } = require('http-status-codes')
 const getAllUser = async (req, res) => {
   console.log(req.user);
@@ -12,18 +12,31 @@ const getSingleUser = async (req, res) => {
   console.log(userId);
   const user = await User.findOne({_id : userId}).select('-password')
   if(!user){
-    throw new customErrors.NotFoundError('No user with ID')
+    throw new CustomErrors.NotFoundError('No user with ID')
   }
   res.status(StatusCodes.OK).json({user})
 }
 const showCurrentUser = async (req, res) => {
-  res.send('who am i')
+  
+  res.status(StatusCodes.OK).json({user : req.user})
 }
 const updateUser = async (req, res) => {
   res.send('update user')
 }
 const updateUserPassword = async (req, res) => {
-  res.send('update password')
+  const {oldPassword, newPassword} = req.body
+  if(!oldPassword || !newPassword){
+    throw new CustomErrors.BadRequestError('Please provide Old and New Password')
+  }
+  const {userId} = req.user
+  const user = await User.findOne({_id : userId})
+  const oldPasswordValid = await user.comparePassword(oldPassword)
+  if(!oldPasswordValid){
+    throw new CustomErrors.UnauthenticatedError('Please valid credentials')
+  }
+  user.password = newPassword
+  await user.save()
+  res.status(StatusCodes.OK).json({msg : 'password updated'})
 }
 
 module.exports = {
