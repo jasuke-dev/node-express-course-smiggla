@@ -1,4 +1,5 @@
 const CustomErrors = require('../errors')
+const { removeListener } = require('../models/User')
 const {isTokenValid} = require('../utils')
 
 
@@ -19,6 +20,15 @@ const authenticateUser = async (req,res,next)=>{
   console.log('token present');
 }
 
+const authorizePermission = (...roles) =>{
+  return (req,res,next)=>{
+    if(!roles.includes(req.user.role)){
+      throw new CustomErrors.UnauthorizedError('Unauthorized to access this route')
+    }
+    next()
+  }
+}
 module.exports = {
-  authenticateUser
+  authenticateUser,
+  authorizePermission
 }

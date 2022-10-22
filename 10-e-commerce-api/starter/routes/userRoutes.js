@@ -1,6 +1,9 @@
 const express = require('express')
 const router = express.Router()
-const {authenticateUser} = require('../middleware/authentication')
+const {
+  authenticateUser,
+  authorizePermission
+} = require('../middleware/authentication')
 
 const {
   getAllUser,
@@ -10,7 +13,7 @@ const {
   updateUserPassword
 } = require('../controllers/userController')
 
-router.route('/').get(authenticateUser,getAllUser)
+router.route('/').get(authenticateUser, authorizePermission('admin','super'),getAllUser)
 
 router.route('/showMe').get(showCurrentUser)
 router.route('/updateUser').patch(authenticateUser,updateUser)
